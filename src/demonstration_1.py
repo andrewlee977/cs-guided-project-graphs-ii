@@ -48,4 +48,43 @@ def flood_fill(image, sr, sc, new_color):
     List[List[int]]
     """
     # Your code here
+    # get the mex rows
+    MAX_ROWS = len(image)
+    # get the max cols
+    MAX_COLS = len(image[0])
+    # extract the current color of the image at sr and sc
+    current_color = image[sr][sc]
+    # if current color is the same as the new color then return the image
+    if current_color == new_color:
+      return image
+    # curry a dfs function inside the flood fill
+    def dfs(row, col):
+      # if the image at the current row and current col is equal to the current color
+      if image[row][col] == current_color:
+        # set the image at current row and current col to the new color
+        image[row][col] = new_color
+
+        # if the row is gereater than or equal to 1.
+        if row >= 1:
+          # call dfs on row - 1 and col
+          dfs(row - 1, col)
+        # check if the row + 1 is less than the max rows.
+        if row + 1 < MAX_ROWS:
+          # call dfs on row + 1 and col
+          dfs(row + 1, col)
+        # if col is greater than or equal to 1.
+        if col >= 1:
+          # call dfs on row and the col - 1
+          dfs(row, col - 1)
+        # check if col + 1 is less than max cols.
+        if col + 1 < MAX_COLS:
+          # call dfs on row and the col + 1
+          dfs(row, col + 1)
+    # call dfs with sr and sc
+    dfs(sr, sc)
+
+    # return the image
+    return image
+
+
 
